@@ -68,6 +68,26 @@
     <div class="matrix"></div>
     <div class="connect-tech">Connect Tech</div>
     <script>
+function createMatrixCode() {
+    const numCodes = 50; // Aumente esse valor para exibir mais zeros
+    for (let i = 0; i < numCodes; i++) {
+        const code = document.createElement('span');
+        code.className = 'matrix-code';
+        code.innerHTML = '0';
+        code.style.left = `${Math.random() * 100}%`;
+        code.style.top = `${Math.random() * 100}%`;
+        code.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        code.style.fontSize = `${Math.random() * 24 + 10}px`;
+
+        document.body.appendChild(code);
+
+        setTimeout(() => {
+            code.remove();
+        }, 5000);
+    }
+}
+        
+        
         const matrix = document.querySelector('.matrix');
 
         function createMatrixCode() {
