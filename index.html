@@ -8,8 +8,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Courier New', monospace;
-            font-size: 24px;
-            line-height: 1.5;
+            font-size: 16px;
+            line-height: 1;
             color: green;
             background: black;
             overflow: hidden;
@@ -59,8 +59,8 @@
         function createMatrixCode() {
             const code = document.createElement('div');
             code.textContent = '0';
-            code.style.left = `${Math.random() * 100}%`;
-            code.style.top = `${Math.random() * 100}%`;
+            code.style.left = `${Math.random() * 100}vw`;
+            code.style.top = `${Math.random() * 100}vh`;
             code.style.animation = `matrixFade ${Math.random() * 3 + 1}s infinite`;
             matrixRain.appendChild(code);
             code.addEventListener('animationiteration', () => {
