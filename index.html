@@ -3,57 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connct Tech</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .matrix-text {
-            color: green;
             font-family: 'Courier New', monospace;
             font-size: 24px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            margin: 0;
-            white-space: nowrap;
+            line-height: 1.5;
+            color: green;
+            background: black;
             overflow: hidden;
-            border-right: 2px solid green;
-            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
         }
 
-        @keyframes typing {
-            from {
-                width: 0;
-            }
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            overflow: hidden;
+        }
+
+        .matrix-code {
+            position: absolute;
+            color: green;
+            font-size: 16px;
+            opacity: 0.1;
+            animation: rain 0.5s linear infinite;
+        }
+
+        @keyframes rain {
             to {
-                width: 100%;
+                transform: translateY(100vh);
             }
         }
 
-        @keyframes blink-caret {
-            from, to {
-                border-color: transparent;
+        @keyframes matrixFade {
+            0%, 100% {
+                opacity: 0.1;
             }
             50% {
-                border-color: green;
+                opacity: 0.8;
             }
         }
     </style>
 </head>
 <body>
-    <div class="matrix-text">
-        <h1>Bem-vindo a Connct Tech</h1>
-    </div>
+    <div class="matrix-rain"></div>
+    
+    <script>
+        const matrixRain = document.querySelector('.matrix-rain');
+
+        function createMatrixCode() {
+            const code = document.createElement('div');
+            code.textContent = '0';
+            code.style.left = `${Math.random() * 100}%`;
+            code.style.animationDuration = `${Math.random() * 1 + 0.5}s, ${Math.random() * 3 + 2}s`;
+            code.style.animationDelay = `-${Math.random() * 2}s`;
+            matrixRain.appendChild(code);
+            code.addEventListener('animationiteration', () => {
+                code.remove();
+            });
+        }
+
+        setInterval(createMatrixCode, 100);
+    </script>
 </body>
 </html>
