@@ -27,14 +27,8 @@
 
         .matrix-code {
             position: absolute;
-            opacity: 0.1;
-            animation: rain 0.5s linear infinite;
-        }
-
-        @keyframes rain {
-            to {
-                transform: translateY(100vh);
-            }
+            opacity: 0;
+            font-size: 16px;
         }
 
         .connect-tech {
@@ -66,8 +60,8 @@
             const code = document.createElement('div');
             code.textContent = '0';
             code.style.left = `${Math.random() * 100}%`;
-            code.style.animationDuration = `${Math.random() * 1 + 0.5}s, ${Math.random() * 3 + 2}s`;
-            code.style.animationDelay = `-${Math.random() * 2}s`;
+            code.style.top = `${Math.random() * 100}%`;
+            code.style.animation = `matrixFade ${Math.random() * 3 + 1}s infinite`;
             matrixRain.appendChild(code);
             code.addEventListener('animationiteration', () => {
                 code.remove();
