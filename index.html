@@ -90,7 +90,7 @@ function createMatrixCode() {
             const code = document.createElement('div');
             code.className = 'matrix-code';
             code.textContent = '0', '1';
-            code.style.left = Math.random() * 600 + 'vw';
+            code.style.left = Math.random() * 200 + 'vw';
             code.style.animationDuration = Math.random() * 2 + 1 + 's';
             matrix.appendChild(code);
             code.addEventListener('animationiteration', () => {
