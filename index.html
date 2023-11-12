@@ -74,7 +74,7 @@ function createMatrixCode() {
         code.innerHTML = '0', '1';       
         code.style.left = `${Math.random() * 100}%`;
         code.style.top = `${Math.random() * 100}%`;
-        code.style.animationDuration = `${Math.random() * 3 + 2}s`;
+        code.style.animationDuration = `${Math.random() * 3 * 2}s`;
         code.style.fontSize = `${Math.random() * 24 + 10}px`;
         document.body.appendChild(code);
 
@@ -91,7 +91,7 @@ function createMatrixCode() {
             code.className = 'matrix-code';
             code.textContent = '0', '1';
             code.style.left = Math.random() * 200 + 'vw';
-            code.style.animationDuration = Math.random() * 2 + 1 + 's';
+            code.style.animationDuration = Math.random() * 2 * 1 + 's';
             matrix.appendChild(code);
             code.addEventListener('animationiteration', () => {
                 code.remove();
