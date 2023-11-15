@@ -1,0 +1,34 @@
+# beauty_soup.py
+import pandas as pd
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
+
+url = "https://ge.globo.com/futebol/brasileirao-serie-a"
+page = urlopen(url)
+html = page.read().decode("utf-8")
+soup = BeautifulSoup(html, "html.parser")
+from bs4 import BeautifulSoup
+
+import requests
+
+html = requests.get("https://p1.trrsf.com/api/musa-soccer/ms-standings-light?idChampionship=1398&idPhase=&language=pt-BR&country=BR&nav=N&timezone=BR").content
+
+soup = BeautifulSoup(html, 'html.parser')
+
+print(soup.prettify())
+
+Pontos = soup.find("span", class_="_block _margin-b-5 -gray")
+
+table = soup.find('table')
+
+    # Extrair dados da tabela e criar um DataFrame
+data = []
+for row in table.find_all('tr')[1:]:  # Ignorar a primeira linha se for o cabeçalho
+    columns = row.find_all('td')
+    data.append([col.text.strip() for col in columns])
+
+    # Criar um DataFrame com os dados
+df = pd.DataFrame(data, columns=['Coluna1', 'Coluna2', 'Coluna3', 'Coluna4', 'Coluna5', 'Coluna6', 'Coluna7', 'Coluna8', 'Coluna9', 'Coluna10', 'Coluna11', 'Coluna12', 'Coluna13'])
+
+    # Visualizar o DataFrame
+print(df)
