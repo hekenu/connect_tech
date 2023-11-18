@@ -1,34 +1,46 @@
-# beauty_soup.py
 import pandas as pd
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
-url = "https://ge.globo.com/futebol/brasileirao-serie-a"
+# URL_site_raspado
+url = input("Digite a URL do site a ser raspado: ")
+
+# Abrir_URL_ler_conteúdo_HTML_página
 page = urlopen(url)
 html = page.read().decode("utf-8")
+
+# Criar_um_objeto_BeautifulSoup_para_analisar_HTML
 soup = BeautifulSoup(html, "html.parser")
-from bs4 import BeautifulSoup
 
-import requests
+# Encontrar_tabelas_página
+tabelas = soup.find_all('table')
 
-html = requests.get("https://p1.trrsf.com/api/musa-soccer/ms-standings-light?idChampionship=1398&idPhase=&language=pt-BR&country=BR&nav=N&timezone=BR").content
-
-soup = BeautifulSoup(html, 'html.parser')
-
-print(soup.prettify())
-
-Pontos = soup.find("span", class_="_block _margin-b-5 -gray")
-
-table = soup.find('table')
-
+# Iterar_tabelas
+for i, tabela in enumerate(tabelas):
     # Extrair dados da tabela e criar um DataFrame
-data = []
-for row in table.find_all('tr')[1:]:  # Ignorar a primeira linha se for o cabeçalho
-    columns = row.find_all('td')
-    data.append([col.text.strip() for col in columns])
+    data = []
+    colunas = []
 
-    # Criar um DataFrame com os dados
-df = pd.DataFrame(data, columns=['Coluna1', 'Coluna2', 'Coluna3', 'Coluna4', 'Coluna5', 'Coluna6', 'Coluna7', 'Coluna8', 'Coluna9', 'Coluna10', 'Coluna11', 'Coluna12', 'Coluna13'])
+    # Obter_nomes_colunas_tabela
+    for th in tabela.find_all('th'):
+        colunas.append(th.text.strip())
 
-    # Visualizar o DataFrame
-print(df)
+    # Certificar-se_de_que_existem_colunas_antes_de_tentar_extrair_dados
+    if colunas:
+        for row in tabela.find_all('tr')[1:]:  # Ignorar a primeira linha se for o cabeçalho
+            columns = row.find_all(['td', 'th'])
+            data.append([col.text.strip() for col in columns])
+
+        # Verificar_se_o_número_de_colunas_nos_dados_é_consistente_com_o_número_de_colunas_nas colunas
+        if len(colunas) != len(data[0]):
+            print(f"Ajustando o número de colunas de {len(data[0])} para {len(colunas)}")
+            data = [row[:len(colunas)] for row in data]
+
+        # Criar_um_DataFrame_com_os_dados_e_atribuir_nomes_às_colunas
+        df = pd.DataFrame(data, columns=colunas[:len(data[0])])
+
+        # Exibir_o_DataFrame_com_os_nomes_reatribuídos
+        print(f"\nDataFrame {i+1} - Nomes reatribuídos:")
+        print(df)
+    else:
+        print(f"\nSem colunas encontradas na tabela {i+1}. Ignorando esta tabela.")
